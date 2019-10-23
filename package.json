@@ -1,0 +1,64 @@
+{
+  "name": "bottles-to-filament-app",
+  "productName": "bottles-to-filament-app",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpashkovskiy/bottles-to-filament-app.git"
+  },
+  "author": "Matvey Pashkovskiy <mathew.pashkovsky@gmail.com> (https://www.linkedin.com/in/matvey-pashkovskiy-0a1a9940/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mpashkovskiy/bottles-to-filament-app/issues"
+  },
+  "homepage": "https://github.com/mpashkovskiy/bottles-to-filament-app#readme",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "npx standard --fix"
+  },
+  "keywords": [],
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "my_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.45",
+    "@electron-forge/maker-deb": "^6.0.0-beta.45",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.45",
+    "@electron-forge/maker-zip": "^6.0.0-beta.45",
+    "electron": "7.0.0",
+    "standard": "^14.3.1"
+  }
+}
