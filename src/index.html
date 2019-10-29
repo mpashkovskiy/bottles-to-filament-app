@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style type="text/css">
+      body {
+        padding-top: 10px;
+      }
       .container-fluid {
         max-width: 550px;
       }
+      .badge {
+        font-weight: normal;
+      }
       h5, p {
-        margin-top: 30px;
+        margin-top: 20px;
       }
       form {
         margin-top: 10px;
@@ -18,6 +24,10 @@
         margin: 5px;
         padding: 7px;
         cursor: pointer;
+        border: 1px solid white;
+      }
+      img.selected {
+        border: 1px solid lightgray;
       }
       img:hover {
         background-color: #f8f9fa;
@@ -27,7 +37,15 @@
     <title>Bottles To Filament App</title>
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
+      <div class="row">
+        <div class="col-sm text-small text-muted text-right">
+          <span
+            class="badge badge-pill badge-danger"
+            v-bind:class="{'badge-danger': boardStatus == 0, 'badge-success': boardStatus == 1}"
+          >{{boardStatus == 0 ? "Board is offline" : "Board is online"}}</span>
+        </div>
+      </div>
       <div class="row">
         <div class="col-sm">
           <h5>Choose plastic type:</h5>
@@ -35,16 +53,42 @@
       </div>
       <div class="row">
         <div class="col-sm text-center">
-          <img src="imgs/100px-Plastic_Recycling_Code_01_PET.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic_Recycling_Code_02_PE-HD.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic-recyc-03.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic_Recycling_Code_04_PE-LD.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic_Recycling_Code_05_PP.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic_Recycling_Code_06_PS.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic-recyc-07.svg.png" class="rounded">
-          <img src="imgs/100px-Plastic-recyc-abs.svg.png" class="rounded">
+          <img
+            class="rounded"
+            v-for="plastic in plasticTypes"
+            v-bind:class="{'selected': plastic.selected}"
+            v-bind:src="plastic.icon"
+            v-on:click="setPlastic(plastic)"
+          />
         </div>
       </div>
+      <form>
+        <div class="form-group row">
+          <label for="thickness" class="col-sm-4 col-form-label">Thickness</label>
+          <div class="col-sm-8">
+            <input
+              type="number"
+              step="0.5"
+              class="form-control text-right"
+              id="thickness"
+              v-model="TH"
+            >
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="width" class="col-sm-4 col-form-label">Set type width to</label>
+          <div class="col-sm-8">
+            <input
+              type="number"
+              disabled
+              step="0.5"
+              class="form-control text-right"
+              id="width"
+              v-model="W"
+            >
+          </div>
+        </div>
+      </form>
       <div class="row">
         <div class="col-sm">
           <h5>or set parameters manually:</h5>
@@ -52,15 +96,27 @@
       </div>
       <form>
         <div class="form-group row">
-          <label for="temp" class="col-sm-3 col-form-label">Temperature</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="temp">
+          <label for="temp" class="col-sm-4 col-form-label">Temperature</label>
+          <div class="col-sm-8">
+            <input
+              type="number"
+              step="0.5"
+              class="form-control text-right"
+              id="temp"
+              v-model="T"
+            >
           </div>
         </div>
         <div class="form-group row">
-          <label for="temp" class="col-sm-3 col-form-label">Speed</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="temp">
+          <label for="temp" class="col-sm-4 col-form-label">Speed</label>
+          <div class="col-sm-8">
+            <input
+              type="number"
+              step="0.5"
+              class="form-control text-right"
+              id="temp"
+              v-model="V"
+            >
           </div>
         </div>
       </form>
@@ -69,11 +125,8 @@
           <button type="button" class="btn btn-primary btn-md btn-block">Start</button>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm text-center text-muted">
-          <p class="copyright">&copy; <a href="http://rpbureau.ru/">Бюро РиП</a>, <script type="text/javascript">document.write(new Date().getFullYear())</script></p>
-        </div>
-      </div>
     </div>
+    <script src="js/vue.min.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
