@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-sm text-small text-muted text-right">
           <span
-            class="badge badge-pill badge-danger"
+            class="badge badge-pill"
             v-bind:class="{'badge-danger': !boardOnline, 'badge-success': boardOnline}"
           >{{boardOnline ? "Online" : "Offline"}}</span>
         </div>
@@ -96,10 +96,15 @@
           <button
             type="button"
             class="btn btn-primary btn-md btn-block"
+            v-on:click="start"
           >Start</button>
         </div>
         <div class="col-sm">
-          <button type="button" class="btn btn-outline-danger btn-md btn-block">Stop</button>
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-md btn-block"
+            v-on:click="stop"
+          >Stop</button>
         </div>
       </div>
     </div>

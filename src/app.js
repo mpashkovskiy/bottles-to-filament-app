@@ -12,7 +12,8 @@ new Vue({
     T: 0,
     V: 0,
     TH: 1,
-    W: 0
+    W: 0,
+    motorLed: undefined
   },
   created: function () {
     var _self = this
@@ -27,9 +28,10 @@ new Vue({
 
       console.log('checking connection...')
       _self.waiting = true
-      _self.board = new five.Board()
+      _self.board = new five.Board({repl: false})
       _self.board.on('ready', function () {
-        _self.boardOnline = true
+        _self.boardOnline = true;
+        _self.motorLed = five.Led(CONFIG.MOTOR_PIN)
       })
       _self.board.on('fail', function () {
         setTimeout(function () {
@@ -54,15 +56,10 @@ new Vue({
         return
       }
 
-      new five
-        .Led(CONFIG.MOTOR_PIN)
-        .blink(this.V * 100)
+      this.motorLed.blink(this.V * 100)
     },
     stop: function () {
-      new five
-        .Led(CONFIG.MOTOR_PIN)
-        .stop()
-        .off()
+      this.motorLed.stop().off()
     }
   }
 })
