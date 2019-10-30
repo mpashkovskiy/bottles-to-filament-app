@@ -19,6 +19,9 @@ form {
 label {
   text-align: right;
 }
+#plasticTypes {
+  min-height: 252px;
+}
 img {
   margin: 5px;
   padding: 7px;

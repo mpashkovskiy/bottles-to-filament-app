@@ -5,8 +5,11 @@ clean:
 node_modules: package.json
 	npm i
 
-start: node_modules
+lint:
+	npm run lint
+
+start: node_modules lint
 	npm start
 
-package:
+package: node_modules lint
 	npm run package
