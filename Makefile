@@ -8,5 +8,5 @@ node_modules: package.json
 start: node_modules
 	npm start
 
-pack:
+package:
 	npm run package

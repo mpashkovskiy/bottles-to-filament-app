@@ -1,7 +1,7 @@
 # Bottles To Filament App
 
 Требования:
-* (node.js)[https://nodejs.org/en/]
+* [node.js](https://nodejs.org/en/)
 * прошитый Arduino
 
 ## Прошивка Arduino
