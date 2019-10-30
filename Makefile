@@ -5,7 +5,7 @@ clean:
 node_modules: package.json
 	npm i
 
-run: node_modules
+start: node_modules
 	npm start
 
 pack:

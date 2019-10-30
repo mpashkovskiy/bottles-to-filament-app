@@ -1,0 +1,33 @@
+body {
+  padding-top: 10px;
+}
+.container-fluid {
+  max-width: 550px;
+}
+.badge {
+  font-weight: normal;
+}
+h4 {
+  margin-top: 10px;
+}
+p {
+  margin-top: 20px;
+}
+form {
+  margin-top: 10px;
+}
+label {
+  text-align: right;
+}
+img {
+  margin: 5px;
+  padding: 7px;
+  cursor: pointer;
+  border: 1px solid white;
+}
+img.selected {
+  border: 1px solid #ced4da;
+}
+img:hover {
+  background-color: #f8f9fa;
+}

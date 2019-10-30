@@ -1,14 +1,17 @@
 {
   "plasticTypes": [
+    {"icon": "imgs/100px-Plastic_Recycling_Code_01_PET.svg.png",   "T": 1, "V": 2},
+    {"icon": "imgs/100px-Plastic_Recycling_Code_02_PE-HD.svg.png", "T": 2, "V": 4},
+    {"icon": "imgs/100px-Plastic-recyc-03.svg.png",                "T": 3, "V": 6},
+    {"icon": "imgs/100px-Plastic_Recycling_Code_04_PE-LD.svg.png", "T": 4, "V": 8},
+    {"icon": "imgs/100px-Plastic_Recycling_Code_05_PP.svg.png",    "T": 5, "V": 10},
+    {"icon": "imgs/100px-Plastic_Recycling_Code_06_PS.svg.png",    "T": 6, "V": 12},
+    {"icon": "imgs/100px-Plastic-recyc-07.svg.png",                "T": 7, "V": 14},
+    {"icon": "imgs/100px-Plastic-recyc-abs.svg.png",               "T": 8, "V": 16}
+  ],
 
-    {"icon": "imgs/100px-Plastic_Recycling_Code_01_PET.svg.png",   "T": 1, "V": 1},
-    {"icon": "imgs/100px-Plastic_Recycling_Code_02_PE-HD.svg.png", "T": 2, "V": 2},
-    {"icon": "imgs/100px-Plastic-recyc-03.svg.png",                "T": 3, "V": 3},
-    {"icon": "imgs/100px-Plastic_Recycling_Code_04_PE-LD.svg.png", "T": 4, "V": 4},
-    {"icon": "imgs/100px-Plastic_Recycling_Code_05_PP.svg.png",    "T": 5, "V": 5},
-    {"icon": "imgs/100px-Plastic_Recycling_Code_06_PS.svg.png",    "T": 6, "V": 6},
-    {"icon": "imgs/100px-Plastic-recyc-07.svg.png",                "T": 7, "V": 7},
-    {"icon": "imgs/100px-Plastic-recyc-abs.svg.png",               "T": 8, "V": 8}
-
-  ]
+  "board": {
+    "MOTOR_PIN": 13,
+    "TERM_PIN": 1
+  }
 }
