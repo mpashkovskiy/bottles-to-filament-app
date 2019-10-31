@@ -31,7 +31,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        contents: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
+        contents: '$(System.DefaultWorkingDirectory)/out/*'
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishBuildArtifacts@1
@@ -52,7 +52,7 @@ stages:
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
-        assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+        assets: '$(Build.ArtifactStagingDirectory)/*'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
 
