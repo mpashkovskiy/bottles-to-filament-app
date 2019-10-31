@@ -28,9 +28,9 @@ new Vue({
 
       console.log('checking connection...')
       _self.waiting = true
-      _self.board = new five.Board({repl: false})
+      _self.board = new five.Board({ repl: false })
       _self.board.on('ready', function () {
-        _self.boardOnline = true;
+        _self.boardOnline = true
         _self.motorLed = five.Led(CONFIG.MOTOR_PIN)
       })
       _self.board.on('fail', function () {

@@ -1,8 +1,8 @@
 {
   "name": "bottles-to-filament-app",
   "productName": "bottles-to-filament-app",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.33",
+  "description": "Application to controll bottles to filament device",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mpashkovskiy/bottles-to-filament-app.git"
@@ -30,7 +30,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "my_app"
+            "name": "bottles-to-filament-app"
           }
         },
         {

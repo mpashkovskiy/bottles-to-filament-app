@@ -12,4 +12,4 @@ start: node_modules lint
 	npm start
 
 package: node_modules lint
-	npm run package
+	npm run make

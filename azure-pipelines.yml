@@ -1,0 +1,73 @@
+trigger:
+- master
+
+stages:
+- stage: Packages
+  jobs:
+  - job: Build
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-16.04'
+        mac:
+          imageName: 'macos-10.13'
+        windows:
+          imageName: 'vs2017-win2016'
+
+    pool:
+      vmImage: $(imageName)
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '12.x'
+      displayName: 'Install Node.js'
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '2.7'
+        addToPath: true
+        architecture: 'x64'
+      displayName: 'Install Python (on Windows only)'
+      condition: eq(variables['Agent.OS'], 'Windows_NT')
+
+    - script: |
+        npm install --global --production windows-build-tools@4.0.0
+      displayName: 'Install windows-build-tools (on Windows only)'
+      condition: eq(variables['Agent.OS'], 'Windows_NT')
+
+    - script: |
+        npm install
+      displayName: 'Install dependencies'
+
+    - script: |
+        npm run make
+        ls out/
+        ls out/make/
+      displayName: 'Package'
+
+    - task: CopyFiles@2
+      inputs:
+        contents: |
+          out/make/**/*.zip
+          out/make/**/*.rpm
+          out/make/**/*.deb
+          out/**/*Setup.exe
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: 'packages'
+
+    - task: GitHubRelease@1
+      inputs:
+        gitHubConnection: 'GitHubReleaseConnection'
+        repositoryName: '$(Build.Repository.Name)'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: 'gitTag'
+        changeLogCompareToRelease: 'lastFullRelease'
+        changeLogType: 'commitBased'
+        assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+      condition: eq(variables['Agent.OS'], 'Darwin')
