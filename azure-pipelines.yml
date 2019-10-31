@@ -40,17 +40,19 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
+        npm install --global --production windows-build-tools
         npm install
-        npm run make
+        npx electron-forge package
+        npx electron-forge make
       displayName: 'Build'
 
     - task: GitHubRelease@1
       inputs:
         gitHubConnection: 'GitHubReleaseConnection'
         repositoryName: '$(Build.Repository.Name)'
-        action: 'create'
+        action: 'update'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
-        assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
+        assets: '$(System.DefaultWorkingDirectory)\out\**\*.zip'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
