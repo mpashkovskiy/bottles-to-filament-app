@@ -2,15 +2,15 @@ trigger:
 - master
 
 stages:
-- stage: Build
+- stage: Build_Packages
   jobs:
   - job: Build
     strategy:
       matrix:
-        linux:
-          imageName: 'ubuntu-16.04'
-        mac:
-          imageName: 'macos-10.13'
+        # linux:
+        #   imageName: 'ubuntu-16.04'
+        # mac:
+        #   imageName: 'macos-10.13'
         windows:
           imageName: 'vs2017-win2016'
 
@@ -20,7 +20,7 @@ stages:
     steps:
     - task: NodeTool@0
       inputs:
-        versionSpec: '10.x'
+        versionSpec: '12.x'
       displayName: 'Install Node.js'
 
     - task: UsePythonVersion@0
@@ -28,10 +28,12 @@ stages:
         versionSpec: '2.7'
         addToPath: true
         architecture: 'x64'
+      displayName: 'Install Python (on Windows only)'
       condition: eq(variables['Agent.OS'], 'Windows_NT')
 
     - script: |
         npm install --global --production windows-build-tools
+      displayName: 'Install windows-build-tools (on Windows only)'
       condition: eq(variables['Agent.OS'], 'Windows_NT')
 
     - script: |
@@ -49,7 +51,7 @@ stages:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         artifactName: 'packages' 
 
-- stage: ReleaseToGit
+- stage: Publish_Packages
   jobs:
   - job: Release
     pool:
@@ -65,32 +67,3 @@ stages:
         assets: '$(Build.ArtifactStagingDirectory)/**/*'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
-
-# - stage: WinBuild
-#   jobs:
-#   - job: Build
-#     pool:
-#       vmImage: 'windows-latest'
-#     continueOnError: false
-#     steps:
-#     - task: NodeTool@0
-#       inputs:
-#         versionSpec: '10.x'
-#       displayName: 'Install Node.js'
-
-#     - script: |
-#         npm install
-#         npx electron-forge package
-#         npx electron-forge make
-#       displayName: 'Build'
-
-#     - task: GitHubRelease@1
-#       inputs:
-#         gitHubConnection: 'GitHubReleaseConnection'
-#         repositoryName: '$(Build.Repository.Name)'
-#         action: 'edit'
-#         target: '$(Build.SourceVersion)'
-#         tagSource: 'gitTag'
-#         assets: '$(System.DefaultWorkingDirectory)\out\**\*.zip'
-#         changeLogCompareToRelease: 'lastFullRelease'
-#         changeLogType: 'commitBased'
