@@ -2,7 +2,7 @@
   "name": "bottles-to-filament-app",
   "productName": "bottles-to-filament-app",
   "version": "0.0.16",
-  "description": "",
+  "description": "Application to controll bottles to filament device",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mpashkovskiy/bottles-to-filament-app.git"

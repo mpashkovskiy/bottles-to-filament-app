@@ -37,6 +37,7 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: 'packages' 
 
 - stage: ReleaseToGit
   jobs:
@@ -51,7 +52,7 @@ stages:
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
-        assets: '$(Build.ArtifactStagingDirectory)/*.zip'
+        assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
 
