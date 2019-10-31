@@ -23,6 +23,13 @@ stages:
         versionSpec: '10.x'
       displayName: 'Install Node.js'
 
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '2.7'
+        addToPath: true
+        architecture: 'x64'
+      condition: eq(variables['Agent.OS'], 'Windows_NT')
+
     - script: |
         npm install --global --production windows-build-tools
       condition: eq(variables['Agent.OS'], 'Windows_NT')
