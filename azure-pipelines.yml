@@ -26,6 +26,6 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'gitTag'
-    assets: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
