@@ -38,16 +38,16 @@ stages:
 
     - script: |
         npm install
-      displayName: 'Build'
+      displayName: 'Install dependencies'
 
     - script: |
         ./node_modules/.bin/electron-forge package
         ./node_modules/.bin/electron-forge make
-      displayName: 'Make'
+      displayName: 'Make package'
 
     - task: CopyFiles@2
       inputs:
-        contents: 'out/make/**'
+        contents: '*'
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishBuildArtifacts@1
