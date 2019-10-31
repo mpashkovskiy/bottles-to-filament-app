@@ -4,7 +4,7 @@ trigger:
 stages:
 - stage: Build
   jobs:
-  - job: Build MacOS app
+  - job: MacOSBuild
     pool:
       vmImage: 'macOS-latest'
     continueOnError: false
@@ -29,7 +29,7 @@ stages:
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
 
-  - job: Build Win app
+  - job: WinBuild
     pool:
       vmImage: 'windows-latest'
     continueOnError: false
