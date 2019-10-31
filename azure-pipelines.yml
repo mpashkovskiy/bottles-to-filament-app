@@ -25,7 +25,7 @@ stages:
 
     - script: |
         npm install --global --production windows-build-tools
-      condition: eq($(imageName), 'vs2017-win2016')
+      condition: eq('$(imageName)', 'vs2017-win2016')
 
     - script: |
         npm install
