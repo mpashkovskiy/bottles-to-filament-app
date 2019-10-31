@@ -29,8 +29,8 @@ stages:
         assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
-
 - stage: WinBuild
+  jobs:
   - job: Build
     pool:
       vmImage: 'windows-latest'
