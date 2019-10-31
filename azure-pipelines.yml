@@ -16,10 +16,13 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-    npm run package
-    ls
-  displayName: 'npm install and build'
+    make package
+    ls out/
+    ls out/make/
+    ls out/make/zip/
+    ls out/make/zip/darwin/
+    ls out/make/zip/darwin/x64/
+  displayName: 'Build'
 
 - task: GitHubRelease@1
   inputs:
