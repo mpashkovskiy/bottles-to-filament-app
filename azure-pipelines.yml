@@ -29,31 +29,31 @@ stages:
         assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
-- stage: WinBuild
-  jobs:
-  - job: Build
-    pool:
-      vmImage: 'windows-latest'
-    continueOnError: false
-    steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '10.x'
-      displayName: 'Install Node.js'
+# - stage: WinBuild
+#   jobs:
+#   - job: Build
+#     pool:
+#       vmImage: 'windows-latest'
+#     continueOnError: false
+#     steps:
+#     - task: NodeTool@0
+#       inputs:
+#         versionSpec: '10.x'
+#       displayName: 'Install Node.js'
 
-    - script: |
-        npm install
-        npx electron-forge package
-        npx electron-forge make
-      displayName: 'Build'
+#     - script: |
+#         npm install
+#         npx electron-forge package
+#         npx electron-forge make
+#       displayName: 'Build'
 
-    - task: GitHubRelease@1
-      inputs:
-        gitHubConnection: 'GitHubReleaseConnection'
-        repositoryName: '$(Build.Repository.Name)'
-        action: 'edit'
-        target: '$(Build.SourceVersion)'
-        tagSource: 'gitTag'
-        assets: '$(System.DefaultWorkingDirectory)\out\**\*.zip'
-        changeLogCompareToRelease: 'lastFullRelease'
-        changeLogType: 'commitBased'
+#     - task: GitHubRelease@1
+#       inputs:
+#         gitHubConnection: 'GitHubReleaseConnection'
+#         repositoryName: '$(Build.Repository.Name)'
+#         action: 'edit'
+#         target: '$(Build.SourceVersion)'
+#         tagSource: 'gitTag'
+#         assets: '$(System.DefaultWorkingDirectory)\out\**\*.zip'
+#         changeLogCompareToRelease: 'lastFullRelease'
+#         changeLogType: 'commitBased'
