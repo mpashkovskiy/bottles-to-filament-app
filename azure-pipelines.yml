@@ -12,7 +12,7 @@ stages:
         # mac:
         #   imageName: 'macos-10.13'
         windows:
-          imageName: 'windows-2019'
+          imageName: 'vs2017-win2016'
 
     pool:
       vmImage: $(imageName)
@@ -38,7 +38,8 @@ stages:
 
     - script: |
         npm install
-        npm run make
+        ./node_modules/.bin/electron-forge package
+        ./node_modules/.bin/electron-forge make
       displayName: 'Build'
 
     - task: CopyFiles@2
