@@ -7,10 +7,10 @@ stages:
   - job: Build
     strategy:
       matrix:
-        # linux:
-        #   imageName: 'ubuntu-16.04'
-        # mac:
-        #   imageName: 'macos-10.13'
+        linux:
+          imageName: 'ubuntu-16.04'
+        mac:
+          imageName: 'macos-10.13'
         windows:
           imageName: 'vs2017-win2016'
 
@@ -38,16 +38,18 @@ stages:
 
     - script: |
         npm install
-      displayName: 'Install dependencies'
+      displayName: 'Build'
 
     - script: |
         ./node_modules/.bin/electron-forge package
         ./node_modules/.bin/electron-forge make
-      displayName: 'Make package'
+      displayName: 'Make'
 
     - task: CopyFiles@2
       inputs:
-        contents: '**'
+        contents: |
+          'out/make/**'
+          'out/**/*.exe'
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishBuildArtifacts@1
