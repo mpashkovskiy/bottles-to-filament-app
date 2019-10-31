@@ -1,31 +1,56 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - master
 
-pool:
-  vmImage: 'macOS-10.13'
+stages:
+- stage: Build
+  jobs:
+  - job: Build MacOS app
+    pool:
+      vmImage: 'macOS-latest'
+    continueOnError: false
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    - script: |
+        make package
+      displayName: 'Build'
 
-- script: |
-    make package
-  displayName: 'Build'
+    - task: GitHubRelease@1
+      inputs:
+        gitHubConnection: 'GitHubReleaseConnection'
+        repositoryName: '$(Build.Repository.Name)'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: 'gitTag'
+        assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
+        changeLogCompareToRelease: 'lastFullRelease'
+        changeLogType: 'commitBased'
 
-- task: GitHubRelease@1
-  inputs:
-    gitHubConnection: 'GitHubReleaseConnection'
-    repositoryName: '$(Build.Repository.Name)'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: 'gitTag'
-    assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
-    changeLogCompareToRelease: 'lastFullRelease'
-    changeLogType: 'commitBased'
+  - job: Build Win app
+    pool:
+      vmImage: 'windows-latest'
+    continueOnError: false
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install
+        npm run make
+      displayName: 'Build'
+
+    - task: GitHubRelease@1
+      inputs:
+        gitHubConnection: 'GitHubReleaseConnection'
+        repositoryName: '$(Build.Repository.Name)'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: 'gitTag'
+        assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
+        changeLogCompareToRelease: 'lastFullRelease'
+        changeLogType: 'commitBased'
