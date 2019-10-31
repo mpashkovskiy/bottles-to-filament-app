@@ -38,9 +38,12 @@ stages:
 
     - script: |
         npm install
+      displayName: 'Build'
+
+    - script: |
         ./node_modules/.bin/electron-forge package
         ./node_modules/.bin/electron-forge make
-      displayName: 'Build'
+      displayName: 'Make'
 
     - task: CopyFiles@2
       inputs:
