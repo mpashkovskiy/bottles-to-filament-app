@@ -2,9 +2,9 @@ trigger:
 - master
 
 stages:
-- stage: Build
+- stage: MacOSBuild
   jobs:
-  - job: MacOSBuild
+  - job: Build
     pool:
       vmImage: 'macOS-latest'
     continueOnError: false
@@ -16,6 +16,7 @@ stages:
 
     - script: |
         make package
+        ls
       displayName: 'Build'
 
     - task: GitHubRelease@1
@@ -29,7 +30,8 @@ stages:
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
 
-  - job: WinBuild
+- stage: WinBuild
+  - job: Build
     pool:
       vmImage: 'windows-latest'
     continueOnError: false
@@ -40,7 +42,6 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
-        npm install --global --production windows-build-tools
         npm install
         npx electron-forge package
         npx electron-forge make
