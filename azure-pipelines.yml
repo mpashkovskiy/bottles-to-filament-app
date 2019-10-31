@@ -51,7 +51,7 @@ stages:
       inputs:
         gitHubConnection: 'GitHubReleaseConnection'
         repositoryName: '$(Build.Repository.Name)'
-        action: 'update'
+        action: 'edit'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
         assets: '$(System.DefaultWorkingDirectory)\out\**\*.zip'
