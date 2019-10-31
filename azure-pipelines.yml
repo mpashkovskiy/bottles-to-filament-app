@@ -24,9 +24,12 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
+        npm install --global --production windows-build-tools
+      condition: eq($(imageName), 'vs2017-win2016')
+
+    - script: |
         npm install
-        npx electron-forge package
-        npx electron-forge make
+        npm run make
       displayName: 'Build'
 
     - task: CopyFiles@2
@@ -52,7 +55,7 @@ stages:
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
-        assets: '$(Build.ArtifactStagingDirectory)/*'
+        assets: '$(Build.ArtifactStagingDirectory)/**/*'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
 
