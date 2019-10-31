@@ -2,7 +2,7 @@ trigger:
 - master
 
 stages:
-- stage: Build_Packages
+- stage: Packages
   jobs:
   - job: Build
     strategy:
@@ -12,7 +12,7 @@ stages:
         # mac:
         #   imageName: 'macos-10.13'
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: 'windows-2019'
 
     pool:
       vmImage: $(imageName)
@@ -51,7 +51,7 @@ stages:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         artifactName: 'packages' 
 
-- stage: Publish_Packages
+- stage: Publish
   jobs:
   - job: Release
     pool:
