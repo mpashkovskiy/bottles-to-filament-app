@@ -31,7 +31,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        contents: 'out/**'
+        contents: 'out/make/**'
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishBuildArtifacts@1
