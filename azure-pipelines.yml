@@ -2,12 +2,21 @@ trigger:
 - master
 
 stages:
-- stage: MacOSBuild
+- stage: Build
   jobs:
   - job: Build
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-16.04'
+        mac:
+          imageName: 'macos-10.13'
+        windows:
+          imageName: 'vs2017-win2016'
+
     pool:
-      vmImage: 'macOS-latest'
-    continueOnError: false
+      vmImage: $(imageName)
+
     steps:
     - task: NodeTool@0
       inputs:
@@ -15,20 +24,37 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
-        make package
-        ls
+        npm install
+        npx electron-forge package
+        npx electron-forge make
       displayName: 'Build'
 
-    - task: GitHubRelease@1
+    - task: CopyFiles@1
+      inputs:
+        contents: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@2
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+
+- stage: ReleaseToGit
+  jobs:
+  - job: Release
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+    - task: GitHubRelease@0
       inputs:
         gitHubConnection: 'GitHubReleaseConnection'
         repositoryName: '$(Build.Repository.Name)'
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
-        assets: '$(System.DefaultWorkingDirectory)/out/**/*.zip'
+        assets: '$(Build.ArtifactStagingDirectory)/*.zip'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
+
 # - stage: WinBuild
 #   jobs:
 #   - job: Build
