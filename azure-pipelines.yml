@@ -48,8 +48,10 @@ stages:
     - task: CopyFiles@2
       inputs:
         contents: |
-          out/make/**/*
-          out/**/*.exe
+          out/make/**/*.zip
+          out/make/**/*.rpm
+          out/make/**/*.deb
+          out/make/**/*.exe
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishBuildArtifacts@1
