@@ -58,14 +58,8 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: 'packages' 
+        artifactName: 'packages'
 
-- stage: Publish
-  jobs:
-  - job: Release
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
     - task: GitHubRelease@1
       inputs:
         gitHubConnection: 'GitHubReleaseConnection'
@@ -75,3 +69,4 @@ stages:
         tagSource: 'gitTag'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
+      condition: eq(variables['Agent.OS'], 'Darwin')
