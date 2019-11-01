@@ -69,4 +69,5 @@ stages:
         tagSource: 'gitTag'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
+        assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
       condition: eq(variables['Agent.OS'], 'Darwin')
