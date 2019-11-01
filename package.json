@@ -1,7 +1,7 @@
 {
   "name": "bottles-to-filament-app",
   "productName": "bottles-to-filament-app",
-  "version": "0.0.33",
+  "version": "0.0.37",
   "description": "Application to controll bottles to filament device",
   "repository": {
     "type": "git",
