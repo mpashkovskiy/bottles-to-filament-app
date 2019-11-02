@@ -7,10 +7,10 @@ stages:
   - job: Build
     strategy:
       matrix:
-        linux:
-          imageName: 'ubuntu-16.04'
-        mac:
-          imageName: 'macos-10.13'
+        # linux:
+        #   imageName: 'ubuntu-16.04'
+        # mac:
+        #   imageName: 'macos-10.13'
         windows:
           imageName: 'vs2017-win2016'
 
@@ -64,7 +64,7 @@ stages:
       inputs:
         gitHubConnection: 'GitHubReleaseConnection'
         repositoryName: '$(Build.Repository.Name)'
-        action: 'create'
+        action: 'edit'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
         changeLogCompareToRelease: 'lastFullRelease'
