@@ -38,7 +38,7 @@ stages:
 
     - script: |
         npm install
-      displayName: 'Install dependencies'
+      displayName: 'Install dependencies and rebuild'
 
     - script: |
         npm run make
@@ -64,7 +64,7 @@ stages:
       inputs:
         gitHubConnection: 'GitHubReleaseConnection'
         repositoryName: '$(Build.Repository.Name)'
-        action: 'edit'
+        action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'gitTag'
         changeLogCompareToRelease: 'lastFullRelease'
