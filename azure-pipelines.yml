@@ -7,8 +7,8 @@ stages:
   - job: Build
     strategy:
       matrix:
-        linux:
-          imageName: 'ubuntu-16.04'
+        # linux:
+        #   imageName: 'ubuntu-16.04'
         mac:
           imageName: 'macos-10.13'
         windows:
@@ -38,7 +38,7 @@ stages:
 
     - script: |
         npm install
-      displayName: 'Install dependencies'
+      displayName: 'Install dependencies and rebuild'
 
     - script: |
         npm run make
@@ -69,4 +69,5 @@ stages:
         tagSource: 'gitTag'
         changeLogCompareToRelease: 'lastFullRelease'
         changeLogType: 'commitBased'
+        assets: '$(Build.ArtifactStagingDirectory)/**/*.zip'
       condition: eq(variables['Agent.OS'], 'Darwin')
